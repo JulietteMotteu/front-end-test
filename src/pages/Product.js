@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
+import ProductDetails from "../components/ProductDetails/ProductDetails";
 
 export default function ProductPage(props) {
   const { id } = props;
-  return <h2>product detail page</h2>;
+  return <ProductDetails />;
 }
