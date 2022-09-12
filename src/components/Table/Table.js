@@ -19,7 +19,7 @@ export default function Table() {
   useEffect(() => {
     dispatch(setSelectedProductId(null));
     const getProducts = async () => {
-      const response = await axios.get("/products");
+      const response = await axios.get("products");
       setLoading(false);
       const { data } = response;
       dispatch(setProductsData(data));
