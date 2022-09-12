@@ -1,22 +1,26 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
-import data from "../../data.json";
 
-const selectedId = 1;
+export default function ProductDetails() {
+  const selectedProductId = useSelector(
+    (state) => state.productsStore.productId
+  );
 
-const selectedProduct = data.find((item) => item.id === selectedId);
+  const products = useSelector((state) => state.productsStore.products);
+  const selectedProduct = products.find(
+    (item) => item.id === selectedProductId
+  );
 
-export default function ProductDetails(props) {
-  const { selectedId } = props;
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 800 }}>
       <CardMedia
         component="img"
-        height="auto"
+        height="400"
         image={selectedProduct.image}
         alt={selectedProduct.title}
       />
