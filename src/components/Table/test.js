@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DataGrid } from "@mui/x-data-grid";
 import { Typography, Container } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import { Link } from "react-router-dom";
 import {
@@ -28,19 +28,22 @@ export default function Table() {
     getProducts().catch(console.error);
   }, []);
 
+  const columnsFields = [
+    { fieldName: "ID", headerName: "id", width: "50" },
+    { fieldName: "Title", headerName: "title", width: "200" },
+    { fieldName: "Price", headerName: "price", width: "100" },
+    { fieldName: "Description", headerName: "description", width: "300" },
+  ];
+  const headerNames = columnsFields.map((field) => {
+    if (Object.keys(field).includes("headerName")) {
+      return field.headerName;
+    }
+  });
+
   if (!loading) {
     // Get columns fieldsName
-    const columnsFields = [
-      { fieldName: "id", headerName: "ID", width: "50" },
-      { fieldName: "title", headerName: "Title", width: "500" },
-      { fieldName: "price", headerName: "Price", width: "100" },
-      { fieldName: "category", headerName: "Category", width: "150" },
-    ];
-    const fieldNames = columnsFields.map((field) => {
-      if (Object.keys(field).includes("headerName")) {
-        return field.fieldName;
-      }
-    });
+    const fields = Object.keys(Object.assign({}, ...products));
+    // const columnsFields = fields.slice(0, 4);
 
     // Create columns to display in data-grid
     const columns = columnsFields.map((field) => {
@@ -58,10 +61,14 @@ export default function Table() {
     // Select rows data corresponding the columns to display in data-grid
     const rows = products.map((item) => {
       let entries = Object.entries(item).filter((cur) =>
-        fieldNames.includes(cur[0])
+        headerNames.includes(cur[0])
       );
       return Object.fromEntries(entries);
     });
+
+    console.log(rows);
+    console.log(columns);
+    console.log(headerNames);
 
     const handleRedirection = (params) => {
       dispatch(setSelectedProductId(params.row.id));
@@ -73,8 +80,7 @@ export default function Table() {
           <span className="colored-text">Datatable </span> random users
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Table that displays data concerning products.
-          <br /> Click on a product to see full product details
+          Table that displays data concerning random users
         </Typography>
         <Box sx={{ height: 400, width: "auto" }}>
           <DataGrid
@@ -84,7 +90,6 @@ export default function Table() {
             rowsPerPageOptions={[5]}
             checkboxSelection
             disableSelectionOnClick
-            autoHeight
             onRowClick={(itm) => handleRedirection(itm)}
           />
         </Box>
