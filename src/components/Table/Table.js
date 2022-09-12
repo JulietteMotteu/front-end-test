@@ -1,63 +1,76 @@
-import React, { Component } from "react";
-import Box from "@mui/material/Box";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { DataGrid } from "@mui/x-data-grid";
-
-const columns = [
-  { field: "id", headerName: "ID", width: 90 },
-  {
-    field: "firstName",
-    headerName: "First name",
-    width: 150,
-    editable: true,
-  },
-  {
-    field: "lastName",
-    headerName: "Last name",
-    width: 150,
-    editable: true,
-  },
-  {
-    field: "age",
-    headerName: "Age",
-    type: "number",
-    width: 110,
-    editable: true,
-  },
-  {
-    field: "fullName",
-    headerName: "Full name",
-    description: "This column has a value getter and is not sortable.",
-    sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-  },
-];
-
-const rows = [
-  { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-  { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-];
+import Box from "@mui/material/Box";
+import { Link } from "react-router-dom";
+import {
+  setProductsData,
+  setSelectedProductId,
+} from "../../features/products.slice";
+import axios from "../../api/axios";
+import "./Table.css";
 
 export default function Table() {
-  return (
-    <Box sx={{ height: 400, width: "100%" }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
-        disableSelectionOnClick
-        experimentalFeatures={{ newEditingApi: true }}
-      />
-    </Box>
-  );
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.productsStore.products);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    dispatch(setSelectedProductId(null));
+    const getProducts = async () => {
+      const response = await axios.get("/products");
+      setLoading(false);
+      const { data } = response;
+      dispatch(setProductsData(data));
+      return data;
+    };
+    getProducts().catch(console.error);
+  }, []);
+
+  if (!loading) {
+    // Get columns fieldsName
+    const fields = Object.keys(Object.assign({}, ...products));
+    const columnsFields = fields.slice(0, 4);
+
+    // Create columns to display in data-grid
+    const columns = columnsFields.map((field) => {
+      let column = {
+        field: field === "id" ? "ID" : field,
+        headername: field,
+        width: field === "description" ? 1000 : 150,
+        renderCell: (params) => (
+          <Link to={`/${params.row.id}`}>{params.value}</Link>
+        ),
+      };
+      return column;
+    });
+
+    // Select rows data corresponding the columns to display in data-grid
+    const rows = products.map((item, index) => {
+      item = { ...item, id: index + 1 };
+      console.log(item);
+      let entries = Object.entries(item).filter((cur) =>
+        columnsFields.includes(cur[0])
+      );
+      return Object.fromEntries(entries);
+    });
+
+    const handleRedirection = (params) => {
+      dispatch(setSelectedProductId(params.row.id));
+    };
+
+    return (
+      <Box sx={{ height: 400, width: "auto" }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+          checkboxSelection
+          disableSelectionOnClick
+          onRowClick={(itm) => handleRedirection(itm)}
+        />
+      </Box>
+    );
+  }
 }
