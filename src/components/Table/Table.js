@@ -46,9 +46,7 @@ export default function Table() {
     });
 
     // Select rows data corresponding the columns to display in data-grid
-    const rows = products.map((item, index) => {
-      item = { ...item, id: index + 1 };
-      console.log(item);
+    const rows = products.map((item) => {
       let entries = Object.entries(item).filter((cur) =>
         columnsFields.includes(cur[0])
       );

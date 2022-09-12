@@ -5,6 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
+import "./ProductDetails.css";
 
 export default function ProductDetails() {
   const selectedProductId = useSelector(
@@ -31,8 +32,8 @@ export default function ProductDetails() {
         <Typography variant="body2" color="text.secondary">
           {selectedProduct.description}
         </Typography>
+        <Rating value={selectedProduct.rating.rate} readOnly></Rating>
       </CardContent>
-      <Rating value={selectedProduct.rating.rate} readOnly></Rating>
     </Card>
   );
 }

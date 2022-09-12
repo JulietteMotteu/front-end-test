@@ -1,3 +1,11 @@
 .MuiPaper-root.MuiPaper-elevation {
-  margin: auto;
+  margin: 4rem auto;
+}
+
+.MuiCardMedia-root.MuiCardMedia-media {
+  object-fit: contain;
+}
+
+.MuiRating-root.MuiRating-sizeMedium {
+  margin-top: 1rem;
 }

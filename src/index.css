@@ -2,4 +2,5 @@ body {
   --main-color: #9dcd57;
   --main-text-color: #646464;
   box-sizing: border-box;
+  margin: 0;
 }

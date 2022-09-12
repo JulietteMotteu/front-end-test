@@ -1,3 +1,8 @@
+.header {
+  box-shadow: 0 0.1rem 0.2rem rgb(0 0 0 / 16%);
+  display: flex;
+}
 .header h1 {
   color: var(--main-color);
+  margin: 2rem;
 }
