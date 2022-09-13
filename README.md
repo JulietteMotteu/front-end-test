@@ -22,6 +22,8 @@ I also decided to use functionnal component in place of class components, becaus
 
 I also had the problem that where I fetch the data from the API, products datas where `null` before the component was mounted. I decided to use a `loading` variable and set it to false when the data was fetched, and conditionnally render the component depending on this variable.
 
+Finally, I decided to make use of the store when we go the a product detail page. When we click on a product to see the details, the product detail page is rendered and the store is still filled with the data from the API. I just implemented a condition that makes the API call to get the product details if the user reload the page, because in this case, the store will be empty.
+
 ## Run locally
 
 In the project directory, you can run:
