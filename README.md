@@ -1,7 +1,7 @@
 # Front-end test
 
 - Technos used:
-  - React and
+  - React
   - Redux toolkit
   - React router
 - UI framework: Material-UI
