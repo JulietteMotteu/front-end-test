@@ -1,9 +1,12 @@
 # Front-end test
 
-Technos used: React and Redux toolkit + React router
-UI framework: Material-UI
-API: https://fakestoreapi.com/
-Showcase of the app on github pages: https://juliettemotteu.github.io/front-end-test/
+- Technos used:
+  - React and
+  - Redux toolkit
+  - React router
+- UI framework: Material-UI
+- API: https://fakestoreapi.com/
+- Showcase of the app on github pages: https://juliettemotteu.github.io/front-end-test/
 
 ## Brief description
 
