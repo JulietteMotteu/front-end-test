@@ -17,7 +17,7 @@
   }
 
   .product-page .MuiBox-root {
-    min-width: 200px;
+    min-width: 20rem;
     width: 40%;
     flex-shrink: 0;
   }

@@ -13,9 +13,9 @@ export default function Table() {
 
   // Define columns properties
   const columnsFields = [
-    { fieldName: "id", headerName: "ID", width: "80" },
+    { fieldName: "id", headerName: "ID", width: "100" },
     { fieldName: "title", headerName: "Title", width: "500", flex: 1 },
-    { fieldName: "price", headerName: "Price", width: "100" },
+    { fieldName: "price", headerName: "Price", width: "150" },
     { fieldName: "category", headerName: "Category", width: "150" },
   ];
 
@@ -63,7 +63,7 @@ export default function Table() {
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}
-          checkboxSelection
+          checkboxSelection={false}
           disableSelectionOnClick
           autoHeight
           hideFooter={true}

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Table from "../components/Table/Table";
 import TablePagination from "../components/TablePagination/TablePagination";
+import Loader from "../components/Loader/Loader";
 import {
   setProductsData,
   setDisplayedProducts,
@@ -11,6 +12,9 @@ import axios from "../api/axios";
 export default function HomePage() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const products = useSelector(
+    (state) => state.productsStore.displayedProducts
+  );
 
   useEffect(() => {
     // Fetch products from api
@@ -23,7 +27,9 @@ export default function HomePage() {
 
       // Set products store with data from api
       dispatch(setProductsData(data));
-      dispatch(setDisplayedProducts({ products: data, value: 1 }));
+      if (products === null) {
+        dispatch(setDisplayedProducts({ products: data, value: 1 }));
+      }
       return data;
     };
     getProducts().catch(console.error);
@@ -33,8 +39,10 @@ export default function HomePage() {
     return (
       <>
         <Table />
-        <TablePagination></TablePagination>
+        <TablePagination />
       </>
     );
+  } else {
+    return <Loader />;
   }
 }
