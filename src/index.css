@@ -3,9 +3,13 @@ body {
   --main-text-color: #646464;
   --secondary-color: #e7b142;
   margin: 0;
+  color: var(--main-text-color);
 }
 
 * {
   box-sizing: border-box;
-  color: var(--main-text-color);
+}
+
+.colored-text {
+  color: var(--main-color);
 }

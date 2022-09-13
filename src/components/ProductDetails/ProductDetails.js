@@ -11,6 +11,7 @@ import {
   Rating,
   Chip,
 } from "@mui/material";
+import Loader from "../Loader/Loader";
 import axios from "../../api/axios";
 import "./ProductDetails.css";
 
@@ -55,13 +56,12 @@ export default function ProductDetails() {
         <Typography gutterBottom variant="h4" component="h2">
           <span className="colored-text">Product </span> details
         </Typography>
-        <Card sx={{ maxWidth: 1200, boxShadow: "unset" }}>
+        <Card sx={{ maxWidth: 1200, boxShadow: "unset", gap: "2rem" }}>
           <Box
             sx={{
               height: "auto",
               width: "100%",
               maxWidth: 600,
-              padding: "3rem",
             }}
           >
             <CardMedia
@@ -109,5 +109,7 @@ export default function ProductDetails() {
         </Card>
       </Container>
     );
+  } else {
+    <Loader />;
   }
 }
