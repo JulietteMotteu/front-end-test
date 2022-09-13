@@ -1,6 +1,11 @@
 body {
   --main-color: #9dcd57;
   --main-text-color: #646464;
-  box-sizing: border-box;
+  --secondary-color: #e7b142;
   margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+  color: var(--main-text-color);
 }

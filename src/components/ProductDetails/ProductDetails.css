@@ -1,11 +1,24 @@
-.MuiPaper-root.MuiPaper-elevation {
+.product-page .MuiPaper-root.MuiPaper-elevation {
   margin: 4rem auto;
 }
 
-.MuiCardMedia-root.MuiCardMedia-media {
-  object-fit: contain;
+.price.MuiTypography-root.MuiTypography-body1 {
+  font-weight: bold;
 }
 
-.MuiRating-root.MuiRating-sizeMedium {
-  margin-top: 1rem;
+.MuiRating-root.MuiRating-sizeMedium * {
+  color: var(--secondary-color);
+}
+
+@media (min-width: 600px) {
+  .product-page .MuiPaper-root.MuiPaper-elevation {
+    display: flex;
+    align-items: center;
+  }
+
+  .product-page .MuiBox-root {
+    min-width: 200px;
+    width: 40%;
+    flex-shrink: 0;
+  }
 }

@@ -4,17 +4,20 @@ export const productsSlice = createSlice({
   name: "productsStore",
   initialState: {
     products: null,
-    productId: null,
+    displayedProducts: null,
   },
   reducers: {
     setProductsData: (state, { payload }) => {
       state.products = payload;
     },
-    setSelectedProductId: (state, { payload }) => {
-      state.productId = payload;
+    setDisplayedProducts: (state, { payload }) => {
+      state.displayedProducts = payload.products.slice(
+        payload.value * 5 - 5,
+        payload.value * 5
+      );
     },
   },
 });
 
-export const { setProductsData, setSelectedProductId } = productsSlice.actions;
+export const { setProductsData, setDisplayedProducts } = productsSlice.actions;
 export default productsSlice.reducer;

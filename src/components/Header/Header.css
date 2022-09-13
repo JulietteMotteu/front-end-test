@@ -5,4 +5,6 @@
 .header h1 {
   color: var(--main-color);
   margin: 2rem;
+  font-size: 1.6rem;
+  font-style: italic;
 }
