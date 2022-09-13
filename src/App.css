@@ -1,3 +1,7 @@
 h1 {
   font-family: "Roboto";
 }
+
+.colored-text {
+  color: var(--main-color);
+}

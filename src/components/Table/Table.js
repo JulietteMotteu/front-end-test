@@ -1,94 +1,74 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { DataGrid } from "@mui/x-data-grid";
-import { Typography, Container } from "@mui/material";
-import Box from "@mui/material/Box";
+import { Typography, Container, Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import {
-  setProductsData,
-  setSelectedProductId,
-} from "../../features/products.slice";
-import axios from "../../api/axios";
 import "./Table.css";
 
 export default function Table() {
-  const dispatch = useDispatch();
-  const products = useSelector((state) => state.productsStore.products);
-  const [loading, setLoading] = useState(true);
+  // Get products data from the store
+  const products = useSelector(
+    (state) => state.productsStore.displayedProducts
+  );
 
-  useEffect(() => {
-    dispatch(setSelectedProductId(null));
-    const getProducts = async () => {
-      const response = await axios.get("products");
-      setLoading(false);
-      const { data } = response;
-      dispatch(setProductsData(data));
-      return data;
+  // Define columns properties
+  const columnsFields = [
+    { fieldName: "id", headerName: "ID", width: "80" },
+    { fieldName: "title", headerName: "Title", width: "500", flex: 1 },
+    { fieldName: "price", headerName: "Price", width: "100" },
+    { fieldName: "category", headerName: "Category", width: "150" },
+  ];
+
+  // Get columns fieldsName
+  const fieldNames = columnsFields.map((field) => {
+    if (Object.keys(field).includes("headerName")) {
+      return field.fieldName;
+    }
+  });
+
+  // Create columns to display in data-grid
+  const columns = columnsFields.map((field) => {
+    let column = {
+      field: field.fieldName,
+      headerName: field.headerName,
+      width: field.width,
+      flex: field.flex ? field.flex : 0,
+      renderCell: (params) => (
+        <Link to={`product/${params.row.id}`}>{params.value}</Link>
+      ),
     };
-    getProducts().catch(console.error);
-  }, []);
+    return column;
+  });
 
-  if (!loading) {
-    // Get columns fieldsName
-    const columnsFields = [
-      { fieldName: "id", headerName: "ID", width: "50" },
-      { fieldName: "title", headerName: "Title", width: "500" },
-      { fieldName: "price", headerName: "Price", width: "100" },
-      { fieldName: "category", headerName: "Category", width: "150" },
-    ];
-    const fieldNames = columnsFields.map((field) => {
-      if (Object.keys(field).includes("headerName")) {
-        return field.fieldName;
-      }
-    });
-
-    // Create columns to display in data-grid
-    const columns = columnsFields.map((field) => {
-      let column = {
-        field: field.fieldName,
-        headerName: field.headerName,
-        width: field.width,
-        renderCell: (params) => (
-          <Link to={`/${params.row.id}`}>{params.value}</Link>
-        ),
-      };
-      return column;
-    });
-
-    // Select rows data corresponding the columns to display in data-grid
-    const rows = products.map((item) => {
-      let entries = Object.entries(item).filter((cur) =>
-        fieldNames.includes(cur[0])
-      );
-      return Object.fromEntries(entries);
-    });
-
-    const handleRedirection = (params) => {
-      dispatch(setSelectedProductId(params.row.id));
-    };
-
-    return (
-      <Container>
-        <Typography gutterBottom variant="h4" component="h2">
-          <span className="colored-text">Datatable </span> random users
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Table that displays data concerning products.
-          <br /> Click on a product to see full product details
-        </Typography>
-        <Box sx={{ height: 400, width: "auto" }}>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            checkboxSelection
-            disableSelectionOnClick
-            autoHeight
-            onRowClick={(itm) => handleRedirection(itm)}
-          />
-        </Box>
-      </Container>
+  // Select rows data corresponding the columns to display in data-grid
+  const rows = products.map((item) => {
+    let entries = Object.entries(item).filter((cur) =>
+      fieldNames.includes(cur[0])
     );
-  }
+    return Object.fromEntries(entries);
+  });
+
+  return (
+    <Container className="data-table">
+      <Typography gutterBottom variant="h4" component="h2">
+        <span className="colored-text">Products </span> datatable
+      </Typography>
+      <Typography variant="body2" color="text.secondary">
+        Table that displays data concerning products.
+        <br /> Click on a product to see full product details
+      </Typography>
+      <Box sx={{ height: 350, width: "auto" }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+          checkboxSelection
+          disableSelectionOnClick
+          autoHeight
+          hideFooter={true}
+        />
+      </Box>
+    </Container>
+  );
 }

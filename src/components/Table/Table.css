@@ -1,17 +1,13 @@
-h2.MuiTypography-root.MuiTypography-h4 {
+.data-table h2.MuiTypography-root.MuiTypography-h4 {
   color: var(--main-text-color);
   margin: 2rem auto;
 }
 
-.MuiTypography-root.MuiTypography-body2 {
+.data-table .MuiTypography-root.MuiTypography-body2 {
   margin-bottom: 2rem;
 }
 
-.colored-text {
-  color: var(--main-color);
-}
-
-a {
+.data-table a {
   height: 100%;
   width: 100%;
   display: flex;
@@ -20,6 +16,12 @@ a {
   text-decoration: none;
 }
 
-a:focus {
+.data-table a:focus {
   color: inherit;
+}
+
+.data-table
+  .MuiDataGrid-columnHeader:last-of-type
+  .MuiDataGrid-columnSeparator.MuiDataGrid-columnSeparator--sideRight {
+  display: none;
 }
