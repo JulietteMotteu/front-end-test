@@ -19,8 +19,8 @@ export default function HomePage() {
   useEffect(() => {
     // Fetch products from api
     const getProducts = async () => {
-      const response = await axios.get("products");
-      const { data } = response;
+      const response = await axios.get("products?_quantity=100");
+      const { data } = response.data;
 
       // Set loader to false after fetching products
       setLoading(false);

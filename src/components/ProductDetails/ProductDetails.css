@@ -1,3 +1,6 @@
+.product-page * {
+  color: var(--main-text-color);
+}
 .product-page .MuiPaper-root.MuiPaper-elevation {
   margin: 4rem auto;
 }
@@ -16,7 +19,7 @@
     align-items: center;
   }
 
-  .product-page .MuiBox-root {
+  .product-page .image-box.MuiBox-root {
     min-width: 20rem;
     width: 40%;
     flex-shrink: 0;

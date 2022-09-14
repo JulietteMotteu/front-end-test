@@ -14,9 +14,14 @@ export default function Table() {
   // Define columns properties
   const columnsFields = [
     { fieldName: "id", headerName: "ID", width: "100" },
-    { fieldName: "title", headerName: "Title", width: "500", flex: 1 },
-    { fieldName: "price", headerName: "Price", width: "150" },
-    { fieldName: "category", headerName: "Category", width: "150" },
+    { fieldName: "name", headerName: "Title", width: "400" },
+    { fieldName: "price", headerName: "Price", width: "200" },
+    {
+      fieldName: "ean",
+      headerName: "EAN code",
+      width: "auto",
+      flex: 1,
+    },
   ];
 
   // Get columns fieldsName
