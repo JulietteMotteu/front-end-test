@@ -5,14 +5,14 @@
   - Redux toolkit
   - React router
 - UI framework: Material-UI
-- API: https://fakestoreapi.com/
+- API: https://fakerapi.it/en
 - Showcase of the app on github pages: https://juliettemotteu.github.io/front-end-test/
 
 ## Brief description
 
 I have chosen to use Redux toolkit, which is the latest package for writing Redux and seems much easier to use.
 I also implemented a simple router on the app, to access the product details page.
-I used https://fakestoreapi.com/, a simple API to get fake store data (products, carts, users...). I have chosen to use products data, this way I had enough data to do a pagination on the data table.
+Initially, I used https://fakestoreapi.com/, a simple API to get fake store data (products, carts, users...), but the API is not responding anymore. I replaced it with https://fakerapi.it/en. I have chosen to use products data and limit the number to 100, this way I had enough data to do a pagination on the data table.
 
 Redux was useful to set up a store and share the data accross all the app without using props everywhere and in the end being difficult to maintain the app. It was useful for the pagination, because I had access to the products everytime I changed the page without using the products data as a prop. I also created a reducer to get only the products corresponding the page we clicked on, to get the pagination to work depending on what we have in the store.
 
