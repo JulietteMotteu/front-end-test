@@ -24,22 +24,24 @@ export default function ProductDetails() {
 
   const products = useSelector((state) => state.productsStore.products);
 
+  const getSelectedProduct = (products) =>
+    products.find((item) => item.id === Number(productId));
+
   useEffect(() => {
     // If store products is filled, find the seleted product in store data
     if (products) {
-      const selectedProduct = products.find(
-        (item) => item.id === Number(productId)
-      );
+      const selectedProduct = getSelectedProduct(products);
       setProductDetails(selectedProduct);
       setLoading(false);
 
       // If store products is empty, fetch product details from api and set data in store productsDetails
     } else {
       const getProductDetails = async () => {
-        const response = await axios.get(`products/${productId}`);
+        const response = await axios.get(`products?_quantity=100`);
         setLoading(false);
-        const { data } = response;
-        setProductDetails(data);
+        const { data } = response.data;
+        const selectedProduct = getSelectedProduct(data);
+        setProductDetails(selectedProduct);
         return data;
       };
       getProductDetails().catch(console.error);
@@ -63,48 +65,64 @@ export default function ProductDetails() {
               width: "100%",
               maxWidth: 600,
             }}
+            className="image-box"
           >
             <CardMedia
               component="img"
               height="400"
               width="400"
               image={productDetails.image}
-              alt={productDetails.title}
+              alt={productDetails.name}
               sx={{ objectFit: "contain" }}
             />
           </Box>
           <CardContent>
-            <Typography gutterBottom variant="h5" component="h5">
-              {productDetails.title}
-            </Typography>
-            <Chip
-              label={productDetails.category}
-              sx={{ margin: "0.5rem 0 1rem" }}
-            />
             <Typography
-              variant="body1"
-              className="price"
-              sx={{ marginBottom: "0.5rem" }}
+              gutterBottom
+              variant="h5"
+              component="h5"
+              sx={{ color: "#383838" }}
             >
-              {productDetails.price}€
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {productDetails.description}
+              {productDetails.name}
             </Typography>
             <Box
               sx={{
                 height: "auto",
-                width: "auto",
+                width: "100%",
                 display: "flex",
+                flexWrap: "wrap",
                 alignItems: "center",
-                marginTop: "1rem",
+                margin: "1rem 0",
               }}
             >
-              <Typography variant="body2" color="text.secondary">
-                Reviews:
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ marginRight: "1rem" }}
+              >
+                Tags:
               </Typography>
-              <Rating value={productDetails.rating.rate} readOnly></Rating>
+              {productDetails.tags.map((tag, i) => (
+                <Chip label={tag} sx={{ margin: "0.2rem" }} />
+              ))}
             </Box>
+            <Typography
+              variant="body1"
+              className="price"
+              sx={{ marginBottom: "0.5rem", color: "#383838" }}
+            >
+              Price: {productDetails.price}€
+            </Typography>
+            <Typography
+              variant="body1"
+              color="text.secondary"
+              sx={{ margin: "0.5rem 0", fontWeight: "bold" }}
+            >
+              Product description:
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {productDetails.description}
+            </Typography>
           </CardContent>
         </Card>
       </Container>
